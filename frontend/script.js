@@ -1,4 +1,4 @@
-const API_URL = 'https://customer-data-bknd.onrender.com/api/customers';
+const API_URL = 'https://customer-data-bknd.onrender.com/api/customers' || "http://localhost:3000";
 
 fetch(API_URL)
   .then(response => response.json())
