@@ -1,4 +1,8 @@
-const API_URL = 'https://customer-data-bknd.onrender.com/api/customers' || "http://localhost:3000";
+// const API_URL = window.location.hostname === 'localhost' ? "http://localhost:3000/api/customers" : 'https://customer-data-bknd.onrender.com/api/customers';
+const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    ? "http://localhost:3000/api/customers" 
+    : 'https://customer-data-bknd.onrender.com/api/customers';
+
 
 fetch(API_URL)
   .then(response => response.json())
