@@ -49,6 +49,17 @@ app.get('/api/customers', (req, res) => {
   });
 });
 
+//  API route to get Product :: Railway DB
+app.get('/api/products', (req, res) => {
+  const query = 'SELECT * FROM Product';
+  db.query(query, (err, results) => {
+    if (err) {
+      return res.status(500).send('Error fetching data');
+    }
+    res.json(results);
+  });
+});
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
