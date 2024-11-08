@@ -24,6 +24,7 @@ app.use(cors({
 // MySQL database connection
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
+  port: process.env.DB_PORT,  // Use port from environment : railway connection 
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME
