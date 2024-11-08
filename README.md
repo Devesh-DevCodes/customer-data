@@ -1,3 +1,4 @@
+```
 ___________________ Final Directory Structure : _____________________
 
 customer-data/
@@ -15,3 +16,6 @@ customer-data/
 │
 ├── .gitignore                 # Git ignore file
 └── README.md                  # Project overview and instructions
+
+
+```
