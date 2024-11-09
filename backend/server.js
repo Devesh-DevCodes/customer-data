@@ -7,13 +7,15 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Enable CORS based on the FRONTEND_URL and ALLOWED_ORIGINS from .env
+// const frontendUrl = process.env.FRONTEND_URL; // Frontend URL from .env
+
+// Enable CORS based on the ALLOWED_ORIGINS from .env
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
-const frontendUrl = process.env.FRONTEND_URL; // Frontend URL from .env
 
 app.use(cors({
   origin: function(origin, callback) {
-    // Allow requests from the frontend URL or any of the allowed origins
-    if (allowedOrigins.includes(origin) || origin === frontendUrl || !origin) {
+    // Allow requests from any of the allowed origins
+    if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);  // Allow the request
     } else {
       callback(new Error('Not allowed by CORS'));  // Reject the request
