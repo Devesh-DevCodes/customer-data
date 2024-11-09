@@ -12,16 +12,22 @@ const port = process.env.PORT || 3000;
 // Enable CORS based on the ALLOWED_ORIGINS from .env
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
+// app.use(cors({
+//   origin: function(origin, callback) {
+//     // Allow requests from any of the allowed origins
+//     if (allowedOrigins.includes(origin) || !origin) {
+//       callback(null, true);  // Allow the request
+//     } else {
+//       callback(new Error('Not allowed by CORS'));  // Reject the request
+//     }
+//   }
+// }));
 app.use(cors({
-  origin: function(origin, callback) {
-    // Allow requests from any of the allowed origins
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);  // Allow the request
-    } else {
-      callback(new Error('Not allowed by CORS'));  // Reject the request
-    }
-  }
+  origin: '*',  // Allow all origins temporarily
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 
 // MySQL database connection
 const db = mysql.createConnection({
