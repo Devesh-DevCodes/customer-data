@@ -12,20 +12,21 @@ const port = process.env.PORT || 3000;
 // Enable CORS based on the ALLOWED_ORIGINS from .env
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
+console.log('Allowed Origins:', allowedOrigins);
+
 app.use(cors({
   origin: function(origin, callback) {
-    // Check if the origin is in the allowed list or is not present (for non-browser clients like Postman)
-    if (allowedOrigins.includes(origin) || !origin) {
+    // If no origin is detected (e.g., from Postman or non-browser clients), allow it
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);  // Allow the request
     } else {
-      console.error('CORS Blocked:', origin);  // Log the blocked origin for debugging
+      console.error('CORS Blocked:', origin);  // Log the blocked origin
       callback(new Error('Not allowed by CORS'));  // Reject the request
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
-
 
 
 // MySQL database connection
@@ -47,7 +48,8 @@ db.connect(err => {
 
 // API route to get customer data
 app.get('/api/customers', (req, res) => {
-  const query = 'SELECT * FROM Customer';
+  // const query = 'SELECT * FROM Customer';
+  const query = 'SELECT * FROM CustomerWithFormattedDate';
   db.query(query, (err, results) => {
     if (err) {
       return res.status(500).send('Error fetching data');
