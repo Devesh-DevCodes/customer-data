@@ -12,21 +12,20 @@ const port = process.env.PORT || 3000;
 // Enable CORS based on the ALLOWED_ORIGINS from .env
 const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
 
-// app.use(cors({
-//   origin: function(origin, callback) {
-//     // Allow requests from any of the allowed origins
-//     if (allowedOrigins.includes(origin) || !origin) {
-//       callback(null, true);  // Allow the request
-//     } else {
-//       callback(new Error('Not allowed by CORS'));  // Reject the request
-//     }
-//   }
-// }));
 app.use(cors({
-  origin: '*',  // Allow all origins temporarily
+  origin: function(origin, callback) {
+    // Check if the origin is in the allowed list or is not present (for non-browser clients like Postman)
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);  // Allow the request
+    } else {
+      console.error('CORS Blocked:', origin);  // Log the blocked origin for debugging
+      callback(new Error('Not allowed by CORS'));  // Reject the request
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 
 
 // MySQL database connection
